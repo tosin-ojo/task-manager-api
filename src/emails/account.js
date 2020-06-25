@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const { getMaxListeners } = require('../models/task')
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -9,7 +8,7 @@ const transporter = nodemailer.createTransport({
     }
   })
 
-const sendWelcomeEmail = (email, name) => {
+const sendWelcomeEmail = async (email, name) => {
 
     const mailOptions = {
       to: email,
@@ -18,16 +17,14 @@ const sendWelcomeEmail = (email, name) => {
       text: `Welcome to the app, ${name}. Let me know how you get along with the app.`,
     }
   
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-         
-        console.log('Email sent: ' + info.response)
-      })
+    try {
+      const info = await transport.sendMail(mailOptions)
+    } catch (e) {
+      
+    }
 }
 
-const sendCancelationEmail = (email, name) => {
+const sendCancelationEmail = async (email, name) => {
 
   const mailOptions = {
     to: email,
@@ -36,13 +33,11 @@ const sendCancelationEmail = (email, name) => {
     text: `Goodbye ${name}. I hope to see you back sometime soon.`
   }
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-
-    console.log('Email sent: ' + info.response)
-  })
+  try {
+    const info = await transport.sendMail(mailOptions)
+  } catch (e) {
+    
+  }
 }
 
 module.exports = {
